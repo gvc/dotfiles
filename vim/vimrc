@@ -1,0 +1,112 @@
+runtime macros/matchit.vim
+
+let mapleader=" "
+
+"makes it so that I don't need to press Shift+; to type excomannds
+nnoremap ; :
+
+set nocompatible
+syntax on
+filetype on
+filetype indent on
+filetype plugin on
+
+nmap 0 ^
+
+imap jk <esc>
+imap kj <esc>
+
+nnoremap <leader><leader> <c-^>
+
+set number
+set cursorline "Highlights the current line
+set colorcolumn=81
+
+set splitbelow
+set splitright
+
+set wildignore=*.swp,*.bak,*.pyc,*.class "Ignore .pyc files and other tmp
+
+" I want tab to be of witdth 2 and never really be a tab
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+
+set clipboard=unnamed
+
+set foldmethod=syntax
+
+set showmatch " highlights matching [{()}]
+
+" Searching enhancements
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
+set ignorecase
+nnoremap <leader>s :nohlsearch<CR>
+
+call plug#begin('~/.vim/plugged')
+
+Plug('ctrlpvim/ctrlp.vim')
+Plug('christoomey/vim-tmux-navigator')
+Plug('jiangmiao/auto-pairs')
+Plug('tpope/vim-surround')
+Plug('tpope/vim-repeat')
+Plug('tpope/vim-endwise')
+Plug('tpope/vim-fugitive')
+Plug('tpope/vim-commentary')
+Plug('tpope/vim-rails')
+Plug('kana/vim-textobj-user')
+Plug('nelstrom/vim-textobj-rubyblock')
+Plug('kchmck/vim-coffee-script')
+Plug('rking/ag.vim')
+Plug('mattn/emmet-vim')
+Plug('vim-airline/vim-airline')
+Plug('vim-airline/vim-airline-themes')
+
+call plug#end()
+
+" Make CtrlP use ag for listing the files. Way faster and no useless files.
+let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+let g:ctrlp_use_caching = 0
+
+" Adds beautiful tabs from airline
+let g:airline#extensions#tabline#enabled = 1
+
+" Netwr better list style
+let g:netrw_liststyle=3
+
+" Strip trailing whitespace
+function! <SID>StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+
+syntax enable
+set background=dark
+set t_Co=256
+set term=screen-256color
+colorscheme dracula
+
+hi Visual ctermbg=103 ctermfg=NONE
+
+" Change cursor shape between insert and normal mode in iTerm3.app
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
