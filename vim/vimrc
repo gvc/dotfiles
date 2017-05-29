@@ -1,9 +1,7 @@
 runtime macros/matchit.vim
 
 let mapleader=" "
-
-"makes it so that I don't need to press Shift+; to type excomannds
-nnoremap ; :
+let maplocalleader=","
 
 set nocompatible
 syntax on
@@ -11,21 +9,46 @@ filetype on
 filetype indent on
 filetype plugin on
 
+" FAST VIM!
+set lazyredraw
+set ttyfast
+set ttyscroll=3
+
 nmap 0 ^
 
-imap jk <esc>
-imap kj <esc>
+imap jk <ESC>
+imap kj <ESC>
+imap <C-Return> <CR><CR><C-o>k<Tab>
 
 nnoremap <leader><leader> <c-^>
+nnoremap <leader>rc :tabedit ~/.vimrc<CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gdi :Gdiff<CR>
 
+" Folding settings
+set foldmethod=syntax   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
+
+" Makes sure VIM doesn't add stuff on the cwd
+set backupdir=/Users/gvc/.vim/backups
+set directory=/Users/gvc/.vim/swaps
+
+" Show line numbers with a width of 5
 set number
+set numberwidth=4
+
 set cursorline "Highlights the current line
 set colorcolumn=81
 
-set splitbelow
-set splitright
+set splitbelow " Horizontal splits go below the current pane
+set splitright " Vertical splits do to the right of the current pane
 
 set wildignore=*.swp,*.bak,*.pyc,*.class "Ignore .pyc files and other tmp
+
+set tildeop " Makes ~ behave like an operator
 
 " I want tab to be of witdth 2 and never really be a tab
 set expandtab
@@ -35,7 +58,8 @@ set tabstop=2
 
 set clipboard=unnamed
 
-set foldmethod=syntax
+set timeoutlen=1000 ttimeoutlen=0
+set esckeys
 
 set showmatch " highlights matching [{()}]
 
@@ -56,22 +80,35 @@ Plug('tpope/vim-endwise')
 Plug('tpope/vim-fugitive')
 Plug('tpope/vim-commentary')
 Plug('tpope/vim-rails')
+Plug('tpope/vim-speeddating')
 Plug('kana/vim-textobj-user')
+Plug('kana/vim-textobj-entire')
 Plug('nelstrom/vim-textobj-rubyblock')
 Plug('kchmck/vim-coffee-script')
 Plug('rking/ag.vim')
 Plug('mattn/emmet-vim')
 Plug('vim-airline/vim-airline')
 Plug('vim-airline/vim-airline-themes')
+Plug('honza/vim-snippets')
+Plug('sirver/ultisnips')
+Plug('vim-ruby/vim-ruby')
+" Elixir
+Plug('elixir-lang/vim-elixir')
+Plug('slashmili/alchemist.vim')
+
+" Tags
+Plug('ludovicchabant/vim-gutentags')
+let g:gutentags_cache_dir = '~/.tags_cache'
+
+" These two go together because they are related to tests.
+Plug('janko-m/vim-test')
+Plug('christoomey/vim-tmux-runner')
 
 call plug#end()
 
 " Make CtrlP use ag for listing the files. Way faster and no useless files.
-let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+let g:ctrlp_user_command = 'ag %s -l -Q --hidden --nocolor -g ""'
 let g:ctrlp_use_caching = 0
-
-" Adds beautiful tabs from airline
-let g:airline#extensions#tabline#enabled = 1
 
 " Netwr better list style
 let g:netrw_liststyle=3
@@ -110,3 +147,13 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
+" Configure tests
+let test#strategy = "vtr"
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+
+map <leader>ct :silent !ctags -R .<CR>:redraw!<CR>
+map <leader>rl :source ~/.vimrc<CR>
