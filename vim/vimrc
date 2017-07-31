@@ -27,7 +27,7 @@ nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gdi :Gdiff<CR>
 
 " Folding settings
-set foldmethod=syntax   "fold based on indent
+set foldmethod=manual   "fold based on indent
 set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
@@ -41,7 +41,7 @@ set number
 set numberwidth=4
 
 set cursorline "Highlights the current line
-set colorcolumn=81
+set colorcolumn=80
 
 set splitbelow " Horizontal splits go below the current pane
 set splitright " Vertical splits do to the right of the current pane
@@ -81,6 +81,7 @@ Plug('tpope/vim-fugitive')
 Plug('tpope/vim-commentary')
 Plug('tpope/vim-rails')
 Plug('tpope/vim-speeddating')
+Plug('tpope/vim-fugitive')
 Plug('kana/vim-textobj-user')
 Plug('kana/vim-textobj-entire')
 Plug('nelstrom/vim-textobj-rubyblock')
@@ -96,6 +97,9 @@ Plug('vim-ruby/vim-ruby')
 Plug('elixir-lang/vim-elixir')
 Plug('slashmili/alchemist.vim')
 
+" Linter
+Plug('w0rp/ale')
+
 " Tags
 Plug('ludovicchabant/vim-gutentags')
 let g:gutentags_cache_dir = '~/.tags_cache'
@@ -108,10 +112,19 @@ call plug#end()
 
 " Make CtrlP use ag for listing the files. Way faster and no useless files.
 let g:ctrlp_user_command = 'ag %s -l -Q --hidden --nocolor -g ""'
-let g:ctrlp_use_caching = 0
+let g:ctrlp_use_caching = 1
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+let g:ctrlp_lazy_update = 2
 
 " Netwr better list style
 let g:netrw_liststyle=3
+
+" Set airline theme
+let g:airline_theme='simple'
+
+" Configure Ale
+let g:ale_sign_error = 'XX'
+let g:ale_sign_warning = '!!'
 
 " Strip trailing whitespace
 function! <SID>StripTrailingWhitespaces()
