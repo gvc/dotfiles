@@ -10,9 +10,8 @@ alias gclean 'git branch --merged | grep -v "\*" | grep -v "master" | xargs -n 1
 alias be "bundle exec"
 alias dm "docker-machine"
 alias dc "docker-compose"
-alias gat "echo -n 673386a0dcf2faf1dffee37c4c1afb7df15ff41d | pbcopy"
+alias gat "echo -n 61605b7cb38654aed98a3e8364ab0855dc4d380d | pbcopy"
 alias d "docker"
-alias git "hub"
 
 alias birl "afplay /Users/gvc/bin/biur.mov"
 
