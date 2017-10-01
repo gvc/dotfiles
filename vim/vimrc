@@ -31,6 +31,7 @@ nnoremap <leader>rc :tabedit ~/.vimrc<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gdi :Gdiff<CR>
+nnoremap <leader>w :w<CR>
 
 " Folding settings
 set foldmethod=indent   "fold based on indent
@@ -63,9 +64,6 @@ set tildeop " Makes ~ behave like an operator
 set expandtab
 set shiftwidth=2
 set softtabstop=2
-
-set clipboard=unnamed
-set clipboard=unnamedplus
 
 set timeoutlen=1000 ttimeoutlen=0
 set esckeys
@@ -185,3 +183,13 @@ nmap <silent> <leader>g :TestVisit<CR>
 
 map <leader>ct :silent !ctags -R .<CR>:redraw!<CR>
 map <leader>rl :source ~/.vimrc<CR>
+
+" OS Specific configurations
+let running_system = system("uname")
+
+if running_system == "Linux"
+  echom "I'm in Debian"
+else
+  set clipboard=unnamed
+endif
+
