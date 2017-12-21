@@ -11,20 +11,17 @@ if !exists('g:syntax_on')
   syntax enable
 endif
 
-filetype on
-filetype indent on
-filetype plugin on
+filetype plugin indent on
 
 " FAST VIM!
 set lazyredraw
 set ttyfast
 set ttyscroll=3
 
-nmap 0 ^
+nnoremap 0 ^
 
-imap jk <ESC>
-imap kj <ESC>
-imap <C-Return> <CR><CR><C-o>k<Tab>
+inoremap jj <ESC>
+inoremap <C-Return> <CR><CR><C-o>k<Tab>
 
 nnoremap <leader><leader> <c-^>
 nnoremap <leader>rc :tabedit ~/.vimrc<CR>
@@ -75,53 +72,60 @@ set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 set ignorecase
 " Always keep search results in the center.
-map N Nzz
-map n nzz
+nnoremap N Nzz
+nnoremap n nzz
 nnoremap <leader>s :nohlsearch<CR>
 
-call plug#begin('~/.vim/plugged')
+set packpath^=~/.vim
+packadd minpac
+call minpac#init()
+call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-Plug('dracula/vim')
-Plug('ctrlpvim/ctrlp.vim')
-Plug('christoomey/vim-tmux-navigator')
-Plug('jiangmiao/auto-pairs')
-Plug('tpope/vim-surround')
-Plug('tpope/vim-repeat')
-Plug('tpope/vim-endwise')
-Plug('tpope/vim-fugitive')
-Plug('tpope/vim-commentary')
-Plug('tpope/vim-rails')
-Plug('tpope/vim-speeddating')
-Plug('tpope/vim-fugitive')
-Plug('kana/vim-textobj-user')
-Plug('kana/vim-textobj-entire')
-Plug('nelstrom/vim-textobj-rubyblock')
-Plug('kchmck/vim-coffee-script')
-Plug('rking/ag.vim')
-Plug('mattn/emmet-vim')
-Plug('vim-airline/vim-airline')
-Plug('vim-airline/vim-airline-themes')
-Plug('honza/vim-snippets')
-Plug('sirver/ultisnips')
-Plug('vim-ruby/vim-ruby')
+call minpac#add('dracula/vim')
+call minpac#add('morhetz/gruvbox')
+
+call minpac#add('ctrlpvim/ctrlp.vim')
+call minpac#add('christoomey/vim-tmux-navigator')
+call minpac#add('jiangmiao/auto-pairs')
+call minpac#add('tpope/vim-surround')
+call minpac#add('tpope/vim-repeat')
+call minpac#add('tpope/vim-endwise')
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-commentary')
+call minpac#add('tpope/vim-rails')
+call minpac#add('tpope/vim-speeddating')
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('kana/vim-textobj-user')
+call minpac#add('kana/vim-textobj-entire')
+call minpac#add('nelstrom/vim-textobj-rubyblock')
+call minpac#add('kchmck/vim-coffee-script')
+call minpac#add('rking/ag.vim')
+call minpac#add('mattn/emmet-vim')
+call minpac#add('vim-airline/vim-airline')
+call minpac#add('vim-airline/vim-airline-themes')
+call minpac#add('honza/vim-snippets')
+call minpac#add('sirver/ultisnips')
+call minpac#add('vim-ruby/vim-ruby')
+call minpac#add('machakann/vim-highlightedyank')
 " Elixir
-Plug('elixir-lang/vim-elixir')
-Plug('slashmili/alchemist.vim')
+call minpac#add('elixir-lang/vim-elixir')
+call minpac#add('slashmili/alchemist.vim')
 
 " Linter
-Plug('w0rp/ale')
+call minpac#add('w0rp/ale')
 
 " Tags
-Plug('ludovicchabant/vim-gutentags')
+call minpac#add('ludovicchabant/vim-gutentags')
 let g:gutentags_cache_dir = '~/.tags_cache'
 
 " These two go together because they are related to tests.
-Plug('janko-m/vim-test')
-Plug('christoomey/vim-tmux-runner')
+call minpac#add('janko-m/vim-test')
+call minpac#add('christoomey/vim-tmux-runner')
 
-Plug('chrisbra/csv.vim')
+call minpac#add('chrisbra/csv.vim')
 
-call plug#end()
+command! PackUpdate source $MYVIMRC | call minpac#update()
+command! PackClean  source $MYVIMRC | call minpac#clean()
 
 " Make CtrlP use ag for listing the files. Way faster and no useless files.
 let g:ctrlp_user_command = 'ag %s -l -Q --hidden --nocolor --ignore-dir _build -g ""'
@@ -133,11 +137,15 @@ let g:ctrlp_lazy_update = 2
 let g:netrw_liststyle=3
 
 " Set airline theme
-let g:airline_theme='dracula'
+let g:airline_theme='gruvbox'
 
 " Configure Ale
 let g:ale_sign_error = 'XX'
 let g:ale_sign_warning = '!!'
+
+" Configuring highlightedyank
+map y <Plug>(highlightedyank)
+" let g:highlightedyank_highlight_duration = 500
 
 " Strip trailing whitespace
 function! <SID>StripTrailingWhitespaces()
@@ -159,10 +167,10 @@ autocmd VimResized * :wincmd =
 syntax enable
 set t_Co=256
 set term=screen-256color
-colorscheme dracula
 set background=dark
+colorscheme gruvbox
 
-hi Visual ctermbg=103 ctermfg=NONE
+" hi Visual ctermbg=103 ctermfg=NONE
 
 " Change cursor shape between insert and normal mode in iTerm3.app
 if exists('$TMUX')
@@ -175,11 +183,11 @@ endif
 
 " Configure tests
 let test#strategy = "vtr"
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
+nnoremap <silent> <leader>t :TestNearest<CR>
+nnoremap <silent> <leader>T :TestFile<CR>
+nnoremap <silent> <leader>a :TestSuite<CR>
+nnoremap <silent> <leader>l :TestLast<CR>
+nnoremap <silent> <leader>g :TestVisit<CR>
 
 map <leader>ct :silent !ctags -R .<CR>:redraw!<CR>
 map <leader>rl :source ~/.vimrc<CR>
@@ -187,9 +195,7 @@ map <leader>rl :source ~/.vimrc<CR>
 " OS Specific configurations
 let running_system = system("uname")
 
-if running_system == "Linux"
-  echom "I'm in Debian"
-else
-  set clipboard=unnamed
-endif
+set clipboard=unnamed
 
+" On MacOs turns out Vim + Ruby is faster is this is left off
+set regexpengine=1
