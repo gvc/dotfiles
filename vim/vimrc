@@ -1,7 +1,12 @@
+" HACK: https://github.com/vim/vim/issues/3117
+if has('python3')
+  silent! python3 1
+endif
+
 runtime macros/matchit.vim
 
 let mapleader=" "
-let maplocalleader=","
+let maplocalleader="\\"
 
 if &compatible
   set nocompatible
@@ -111,6 +116,9 @@ call minpac#add('machakann/vim-highlightedyank')
 call minpac#add('elixir-lang/vim-elixir')
 call minpac#add('slashmili/alchemist.vim')
 
+" Java
+call minpac#add('Dinduks/vim-java-get-set')
+
 " Linter
 call minpac#add('w0rp/ale')
 
@@ -128,9 +136,10 @@ command! PackUpdate source $MYVIMRC | call minpac#update()
 command! PackClean  source $MYVIMRC | call minpac#clean()
 
 " Make CtrlP use ag for listing the files. Way faster and no useless files.
-let g:ctrlp_user_command = 'ag %s -l -Q --hidden --nocolor --ignore-dir _build -g ""'
-let g:ctrlp_use_caching = 1
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+" let g:ctrlp_user_command = 'ag %s -l -Q --hidden --nocolor --ignore-dir _build -g ""'
+" let g:ctrlp_use_caching = 1
+" let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+let g:ctrlp_user_command = 'rg %s --files --color=never --hidden --glob "!/.git"'
 let g:ctrlp_lazy_update = 2
 
 " Netwr better list style
@@ -139,9 +148,10 @@ let g:netrw_liststyle=3
 " Set airline theme
 let g:airline_theme='gruvbox'
 
-" Configure Ale
-let g:ale_sign_error = 'XX'
-let g:ale_sign_warning = '!!'
+let g:ale_linters = {
+\   'ruby': ['reek', 'ruby'],
+\}
+
 
 " Configuring highlightedyank
 map y <Plug>(highlightedyank)
