@@ -344,6 +344,8 @@ you should place your code here."
     (setq org-directory "~/Dropbox (Guava)/org/")
     (setq org-agenda-files '("~/Dropbox (Guava)/org/"))
     (setq org-startup-truncated nil)
+    (require 'ox-beamer)
+    (setq org-export-backends '(beamer html latex md))
     )
   (with-eval-after-load 'dired
     (when (string= system-type "darwin")
