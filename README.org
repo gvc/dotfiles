@@ -1,20 +1,27 @@
-* Installation instructions
+* Purpose
 
-As of July 31st of 2019, this are the packages need to get a new environment up and running
+  This is the dotfiles that I used to develop web applications mainly using Ruby
+on Rails and Vue. My main machine runs Mac OS X so instructions reflect that.
 
-```sh
-brew install \
-  git \
-  reattach-to-user-namespace
-  sops \
-  the-silver-searcher \
-  tmux \
-  vim \
-  zsh
-```
+* Dependencies
 
-Not yet decided upon:
+As of July 31st of 2019, these are the packages need to get a new environment up
+and running:
 
-```sh
+#+begin_src sh
+  brew install \
+    git \
+    npm \
+    reattach-to-user-namespace \
+    sops \
+    the-silver-searcher \
+    tmux \
+    vim \
+    zsh
+#+end_src
+
+And I'm still making my mind on the following:
+
+#+begin_src sh
   brew install editorconfig
-```
+#+end_src
