@@ -2,21 +2,20 @@
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 export TERM="screen-256color-bce"
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/gvc/.oh-my-zsh"
+
+unsetopt inc_append_history
+unsetopt share_history
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="dracula"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -48,14 +47,6 @@ COMPLETION_WAITING_DOTS="true"
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
@@ -68,7 +59,6 @@ plugins=(
   git
   rvm
   tmux
-  tmuxinator
   osx
 )
 
@@ -103,9 +93,6 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
-
 alias gi="git status"
 alias gad="git add ."
 alias gcmsg="git commit -m"
@@ -116,8 +103,16 @@ alias gpl="git pull"
 alias gps="git push"
 alias gclean='git branch --merged | grep -v "\*" | grep -v "master" | xargs -n 1 git branch -d'
 alias be="bundle exec"
-alias dm="docker-machine"
 alias dc="docker-compose"
-alias gat="echo -n ab1f2c4b9cc0d083cbd51a22abf8b6ab66add8b9 | pbcopy"
 alias d="docker"
 
+export PATH="$PATH:$HOME/.bin"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/gvc/.bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/gvc/.bin/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/gvc/.bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/gvc/.bin/google-cloud-sdk/completion.zsh.inc'; fi
