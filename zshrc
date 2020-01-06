@@ -110,6 +110,7 @@ export PATH="$PATH:$HOME/.bin"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/gvc/.bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/gvc/.bin/google-cloud-sdk/path.zsh.inc'; fi
